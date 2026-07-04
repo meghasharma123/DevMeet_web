@@ -1,7 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +19,9 @@ export default function Login() {
       const resp = await axios.post(`http://localhost:3000/login`, req, {
         withCredentials: true,
       });
-      console.log("resp: ", resp);
+
+      dispatch(addUser(resp.data));
+      navigate("/")
     } catch (error) {
       console.log("error login: ", error);
     }
