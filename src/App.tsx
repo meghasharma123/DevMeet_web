@@ -1,6 +1,6 @@
-import Body from "./Body"
+import Body from "./Component/Body"
 import { Routes, Route } from "react-router-dom"
-import Login from "./Login"
+import Login from "./Component/Login"
 
 function App() {
   return (
