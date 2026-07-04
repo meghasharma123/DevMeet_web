@@ -1,19 +1,19 @@
-import Body from "./Component/Body"
-import { Routes, Route } from "react-router-dom"
-import Login from "./Component/Login"
+import Body from "./Component/Body";
+import { Routes, Route } from "react-router-dom";
+import Login from "./Component/Login";
+import { Provider } from "react-redux";
+import { store } from "./store/appStore";
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <Routes>
         <Route path="/" element={<Body />}>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
-    </>
-  )
+    </Provider>
+  );
 }
 
-export default App
-
-// while facing cors error, we have to install cors and add options for the dev url and inside axios also add helper enable.
+export default App;
