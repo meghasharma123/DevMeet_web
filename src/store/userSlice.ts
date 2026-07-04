@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { UserType } from "../types/User";
 
 type UserState = UserType | null;
-const initialState: UserState = null;
+const initialState = null as UserState;
 
-export const userSlice = createSlice<UserState>({
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
