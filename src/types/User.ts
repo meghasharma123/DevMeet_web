@@ -6,6 +6,8 @@ export interface UserType {
   password: string;
   photoUrl: string;
   about: string;
+  age: number;
+  gender:string;
   skills: string[];
   createdAt: string;
   updatedAt: string;

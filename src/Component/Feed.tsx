@@ -27,7 +27,7 @@ export default function Feed() {
 
   return (
     <div className="flex items-center justify-center mt-5">
-      {feed && feed.map((ele) => <UserCad key={ele.emailId} ele={ele} />)}
+      {feed && feed.map((ele, idx) => <UserCad key={idx} ele={ele} />)}
     </div>
   );
 }
