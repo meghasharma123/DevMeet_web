@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Body />}>
           <Route path="/" element={<Feed />} />
+          <Route path="/profile" element={<div>Profile</div>} />
           <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
@@ -19,3 +20,6 @@ function App() {
 }
 
 export default App;
+
+// once user logn=in again data is needed to fetch by user profile
+// make constant file for path.

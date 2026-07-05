@@ -1,14 +1,16 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../util/constants";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -16,14 +18,20 @@ export default function Login() {
         emailId: emailId,
         password: password,
       };
-      const resp = await axios.post(`http://localhost:3000/login`, req, {
+      const resp = await axios.post(`${BASE_URL}/login`, req, {
         withCredentials: true,
       });
 
       dispatch(addUser(resp.data));
-      navigate("/")
-    } catch (error) {
-      console.log("error login: ", error);
+      navigate("/");
+    } catch (err) {
+      const error = err as AxiosError
+      if (error) {
+        setError(error.response?.data as string);
+      }else{
+        console.log("error login: ", error);
+        setError('Unknown error.')
+      }
     }
   };
 
@@ -53,6 +61,7 @@ export default function Login() {
               />
             </div>
           </div>
+          <div className="text-red-600">{error}</div>
           <div className="mt-6">
             <button
               onClick={() => handleLogin()}
