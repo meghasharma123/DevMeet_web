@@ -12,10 +12,12 @@ export default function Feed() {
 
   const getFeed = async () => {
     try {
+      if (feed) return;
+
       const resp = await axios.get(`${BASE_URL}/user/feed`, {
         withCredentials: true,
       });
-      dispatch(addFeed(resp.data.data));
+      dispatch(addFeed(resp.data));
     } catch (error) {
       console.log("error get feed: ", error);
     }
