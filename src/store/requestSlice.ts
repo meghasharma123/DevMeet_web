@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserType } from "../types/User";
+import { RequestsType } from "../types/Requests";
 
-type UserState = UserType[] | null;
+type UserState = RequestsType[] | null;
 
 const initialState = null as UserState;
 
@@ -10,7 +10,10 @@ export const RequestSlice = createSlice({
   initialState,
   reducers: {
     addRequests: (_, action) => action.payload,
-    removeRequests: () => null,
+    removeRequests: (state,action) => {
+      const filteredVal = state?.filter((r) => r._id !== action.payload);
+      return filteredVal;
+    },
   },
 });
 

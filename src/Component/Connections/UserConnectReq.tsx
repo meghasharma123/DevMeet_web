@@ -3,16 +3,30 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../util/constants";
 import { RootState } from "../../store/appStore";
-import { addRequests } from "../../store/requestSlice";
+import { addRequests, removeRequests } from "../../store/requestSlice";
 
 export default function UserConnectReq() {
   const dispatch = useDispatch();
   const requests = useSelector((store: RootState) => store.requests);
 
+  const reviewRequest = async (status: string, id: string) => {
+    try {
+      await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + id,
+        {},
+        { withCredentials: true },
+      );
+
+      dispatch(removeRequests(id));
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
   const fetchConnectionsReq = async () => {
     try {
       if (requests) return;
-      const resp = await axios.get(`${BASE_URL}/user/connections`, {
+      const resp = await axios.get(`${BASE_URL}/user/requests`, {
         withCredentials: true,
       });
 
@@ -37,12 +51,12 @@ export default function UserConnectReq() {
 
       {requests.map((request) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
-          request;
+          request.fromUserId;
 
         return (
           <div
             key={_id}
-            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 w-1/2  mx-auto"
+            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 w-fit  mx-auto"
           >
             <div>
               <img
@@ -58,16 +72,16 @@ export default function UserConnectReq() {
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
-            <div>
+            <div className="flex">
               <button
                 className="btn btn-primary mx-2"
-                // onClick={() => reviewRequest("rejected", request._id)}
+                onClick={() => reviewRequest("rejected", request._id)}
               >
                 Reject
               </button>
               <button
                 className="btn btn-secondary mx-2"
-                // onClick={() => reviewRequest("accepted", request._id)}
+                onClick={() => reviewRequest("accepted", request._id)}
               >
                 Accept
               </button>
