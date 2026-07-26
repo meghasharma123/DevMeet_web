@@ -27,9 +27,14 @@ export default function Feed() {
     getFeed();
   }, []);
 
+  if (!feed) return;
+
+  if (feed.length <= 0)
+    return <h1 className="flex justify-center my-10">No new users founds!</h1>;
+
   return (
     <div className="flex items-center justify-center mt-5">
-      {feed && feed.map((ele, idx) => <UserCad key={idx} ele={ele} />)}
+      <UserCad ele={feed[0]} />
     </div>
   );
 }
