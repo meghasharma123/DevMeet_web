@@ -7,25 +7,34 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/appStore.js";
 import { addUser } from "../store/userSlice.js";
+import { useState } from "react";
 
 export default function Body() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const userData = useSelector((store: RootState) => store.user);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleFetchProfile = async () => {
     try {
-      if (userData) return;
       const resp = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
       });
+
       dispatch(addUser(resp.data));
     } catch (err) {
       const error = err as AxiosError;
+
+      console.log("error", error);
+      
       if (error.status === 401) {
         navigate("/login");
       }
       console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -33,12 +42,26 @@ export default function Body() {
     handleFetchProfile();
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <NavBar />
+
       <div className="flex-1">
         <Outlet />
       </div>
+
       <Footer />
     </div>
   );
