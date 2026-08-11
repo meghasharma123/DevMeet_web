@@ -22,13 +22,13 @@ export default function Body() {
       const resp = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
       });
-
+      console.log("res: ", resp);
       dispatch(addUser(resp.data));
     } catch (err) {
       const error = err as AxiosError;
 
       console.log("error", error);
-      
+
       if (error.status === 401) {
         navigate("/login");
       }
@@ -48,10 +48,6 @@ export default function Body() {
         Loading...
       </div>
     );
-  }
-
-  if (!userData) {
-    return null;
   }
 
   return (
