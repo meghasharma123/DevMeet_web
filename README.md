@@ -29,3 +29,5 @@ for aws connection:
     - config nginx - /etc/nginx/sites-available/default
     - restart nginx - sudo systemctl restart nginx
     - Modify the BASEURL in frontend project to "/api"
+
+- live URL - https://developermeetups.duckdns.org/

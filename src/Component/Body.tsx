@@ -22,7 +22,7 @@ export default function Body() {
       const resp = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
       });
-      console.log("res: ", resp);
+
       dispatch(addUser(resp.data));
     } catch (err) {
       const error = err as AxiosError;
