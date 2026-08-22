@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../../store/connectionSlice";
 import { RootState } from "../../store/appStore";
+import { Link } from "react-router-dom";
 
 export default function Connections() {
   const dispatch = useDispatch();
@@ -57,6 +58,9 @@ export default function Connections() {
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
+             <Link to={"/chat/" + _id}>
+              <button className="btn btn-primary">Chat</button>
+            </Link>
           </div>
         );
       })}
