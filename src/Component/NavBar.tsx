@@ -54,6 +54,9 @@ export default function NavBar() {
                 <Link to="/requests">Requests</Link>
               </li>
               <li>
+                <Link to="/premium">Premium</Link>
+              </li>
+              <li>
                 <button onClick={() => handleLogOut()}>Logout</button>
               </li>
             </ul>
